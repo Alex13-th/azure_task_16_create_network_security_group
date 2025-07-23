@@ -25,8 +25,15 @@ $webNsg = New-AzNetworkSecurityGroup -Name "nsg-webservers" `
     -SecurityRules $ruleHttp
 
 Write-Host "Creating mngSubnet network security group..."
+$dbRule = New-AzNetworkSecurityRuleConfig -Name "allow-from-vnet" `
+  -Description "Allow TCP from inside VNet" `
+  -Access Allow -Protocol Tcp -Direction Inbound -Priority 100 `
+  -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+  -DestinationAddressPrefix * -DestinationPortRange *
+
 $dbNsg = New-AzNetworkSecurityGroup -Name "nsg-database" `
-    -ResourceGroupName $resourceGroupName -Location $location `
+  -ResourceGroupName $resourceGroupName -Location $location `
+  -SecurityRules $dbRule
 
 
 Write-Host "Creating dbSubnet network security group..."
