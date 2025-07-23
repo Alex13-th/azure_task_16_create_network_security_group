@@ -27,7 +27,7 @@ $webNsg = New-AzNetworkSecurityGroup -Name "nsg-webservers" `
 Write-Host "Creating mngSubnet network security group..."
 $dbNsg = New-AzNetworkSecurityGroup -Name "nsg-database" `
     -ResourceGroupName $resourceGroupName -Location $location `
-    -SecurityRules $ruleDb
+
 
 Write-Host "Creating dbSubnet network security group..."
 $ruleSsh = New-AzNetworkSecurityRuleConfig -Name "allow-ssh" `
